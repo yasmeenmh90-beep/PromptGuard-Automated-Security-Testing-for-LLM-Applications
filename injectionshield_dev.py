@@ -1,5 +1,5 @@
 """
-InjectionShield-Dev
+PromptGuard (InjectionShield-Dev)
 ====================
 A local prompt-injection red-team framework: paste your system prompt,
 pick a target model (OpenAI, Anthropic, or a local Hugging Face model),
@@ -442,7 +442,7 @@ def build_pdf_report(result: AuditResult, target_name: str) -> str:
     y = height - inch
 
     c.setFont("Helvetica-Bold", 16)
-    c.drawString(inch, y, "InjectionShield-Dev - Security Audit Report")
+    c.drawString(inch, y, "PromptGuard - Security Audit Report")
     y -= 0.35 * inch
 
     c.setFont("Helvetica", 10)
@@ -685,7 +685,7 @@ def build_terminal_output(result: AuditResult) -> str:
         )
     return f"""
     <div class="terminal">
-        <div><span class="terminal-green">$</span> injectionshield audit --run</div>
+        <div><span class="terminal-green">$</span> promptguard audit --run</div>
         <br>
         {''.join(lines)}
         <br>
@@ -704,7 +704,7 @@ def build_status_bar(result: AuditResult) -> str:
         &nbsp;&nbsp;\u2502&nbsp;&nbsp;
         <span class="stat-danger">VULNERABLE {result.vulnerable_count}</span>
         &nbsp;&nbsp;\u2502&nbsp;&nbsp;
-        ENGINE InjectionShield
+        ENGINE PromptGuard
     </div>
     """
 
@@ -840,11 +840,11 @@ def do_export_pdf(result: Optional[AuditResult], target_name: str):
 # 8. UI
 # ---------------------------------------------------------------------------
 
-with gr.Blocks(title="InjectionShield DevTools", css=CUSTOM_CSS, theme=gr.themes.Base()) as demo:
+with gr.Blocks(title="PromptGuard DevTools", css=CUSTOM_CSS, theme=gr.themes.Base()) as demo:
 
     with gr.Row(elem_id="topbar"):
         with gr.Column(scale=6):
-            gr.HTML('<div class="brand"><span class="brand-shield">\u2b22</span> InjectionShield <span class="version-badge">DEV v0.2</span></div>')
+            gr.HTML('<div class="brand"><span class="brand-shield">\u2b22</span> PromptGuard <span class="version-badge">DEV v0.2</span></div>')
         with gr.Column(scale=4):
             gr.HTML('<div style="text-align:right;padding-top:4px;"><span class="connected-dot">\u25cf</span> <span class="target-badge">SECURITY ENGINE READY</span></div>')
 
@@ -862,7 +862,7 @@ with gr.Blocks(title="InjectionShield DevTools", css=CUSTOM_CSS, theme=gr.themes
             api_key_box = gr.Textbox(label="API KEY", type="password", placeholder="\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022")
             run_btn = gr.Button("\u25b6  RUN SECURITY AUDIT", variant="primary", elem_id="run-button")
 
-            gr.HTML('<div style="font-family:monospace;color:#484f58;font-size:10px;margin-top:8px;">InjectionShield executes adversarial payloads (including multi-turn attacks) against the configured target.</div>')
+            gr.HTML('<div style="font-family:monospace;color:#484f58;font-size:10px;margin-top:8px;">PromptGuard executes adversarial payloads (including multi-turn attacks) against the configured target.</div>')
 
         with gr.Column(scale=7, min_width=600, elem_classes=["dev-panel"]):
             gr.HTML('<div class="panel-header">ATTACK CONSOLE</div>')
@@ -876,7 +876,7 @@ with gr.Blocks(title="InjectionShield DevTools", css=CUSTOM_CSS, theme=gr.themes
                     )
 
                 with gr.Tab("CONSOLE"):
-                    terminal_output = gr.HTML('<div class="terminal"><span class="terminal-green">$</span> InjectionShield ready.<br><br>Waiting for audit...</div>')
+                    terminal_output = gr.HTML('<div class="terminal"><span class="terminal-green">$</span> PromptGuard ready.<br><br>Waiting for audit...</div>')
 
                 with gr.Tab("HISTORY"):
                     history_chart = gr.Plot(show_label=False, value=build_history_chart(load_history()))
@@ -889,7 +889,7 @@ with gr.Blocks(title="InjectionShield DevTools", css=CUSTOM_CSS, theme=gr.themes
 
                 with gr.Tab("SYSTEM"):
                     gr.HTML(
-                        "<div class=\"terminal\">InjectionShield Security Engine<br><br>"
+                        "<div class=\"terminal\">PromptGuard Security Engine<br><br>"
                         "Engine ............. READY<br>"
                         f"Attack Library ..... {len(ATTACK_PAYLOADS)} single-shot + {len(MULTI_TURN_PAYLOADS)} multi-turn<br>"
                         "Evaluator .......... Hybrid<br>"
@@ -931,7 +931,7 @@ with gr.Blocks(title="InjectionShield DevTools", css=CUSTOM_CSS, theme=gr.themes
 
 
 def run_cli() -> None:
-    parser = argparse.ArgumentParser(prog="injectionshield")
+    parser = argparse.ArgumentParser(prog="promptguard")
     subparsers = parser.add_subparsers(dest="command")
     audit_p = subparsers.add_parser("audit", help="Run a security audit from the command line")
     audit_p.add_argument("--prompt", required=True, help="System prompt text, or path to a file containing it")
@@ -956,7 +956,7 @@ def run_cli() -> None:
     api_key = args.api_key or os.environ.get(env_var, "")
 
     target = build_target(provider_map[args.provider], args.model or "", api_key)
-    print(f"Running InjectionShield audit against {target.name} ...")
+    print(f"Running PromptGuard audit against {target.name} ...")
     result = run_security_audit(target, prompt_text)
 
     print(
