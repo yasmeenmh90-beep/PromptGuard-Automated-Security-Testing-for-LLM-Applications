@@ -4,3 +4,4 @@ anthropic
 transformers
 torch
 plotly
+reportlab
