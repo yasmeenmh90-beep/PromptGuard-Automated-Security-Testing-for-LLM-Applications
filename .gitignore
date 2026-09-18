@@ -1,0 +1,23 @@
+# Virtual environment
+venv/
+env/
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Environment variables / secrets
+.env
+*.key
+
+# OS junk
+.DS_Store
+
+# Gradio
+flagged/
+gradio_cached_examples/
+
+# IDE
+.vscode/
+.idea/
