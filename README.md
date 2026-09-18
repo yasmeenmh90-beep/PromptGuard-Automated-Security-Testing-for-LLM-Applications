@@ -1,4 +1,4 @@
-# InjectionShield-Dev
+# PromptGuard — Automated Security Testing for LLM Applications
 
 A local prompt-injection red-team framework for LLM applications. Paste in your app's system prompt, pick a target model, and InjectionShield fires a battery of adversarial attacks at it — including multi-turn jailbreak attempts — then reports which ones got through, how severe each breach is, and how your prompt compares over time.
 
